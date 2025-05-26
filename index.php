@@ -1,6 +1,5 @@
 <?php
-// Start session and include the message display
-require 'php/displayMSG.php';
+	include 'php/message.php';
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +15,6 @@ require 'php/displayMSG.php';
 	<meta name="author" content="Awaiken Theme" />
 	<!-- Page Title -->
 	<title>JOM MAMAK | HALAL</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	<!-- Google Fonts css-->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" />
 	<!-- Bootstrap css -->
@@ -33,10 +31,19 @@ require 'php/displayMSG.php';
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<!-- Head (CSS) -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+	<style>
+		.error{
+			color: red !important;
+			font-weight: bold;
+		} 
+
+		.success {
+			background: lightgreen;
+			color:green !important;
+			font-weight: bold;
+		}
+	</style>
 </head>
 
 <body>
@@ -47,10 +54,10 @@ require 'php/displayMSG.php';
 				<div class="col-md-6 position-static">
 					<div class="comming-soon-info">
 						<div class="comming-soon-info-inner">
-							<img src="images/logo.png" alt="jom-mamak-logo" style="max-width: 100%; height: 169px" />
+							<img src="images/logo.png" alt="jom-mamak-logo" style="max-width: 100%; height: 255px" />
 
 							<h2>
-								Stay Tuned with Halal !!! <span>We are launching soon.</span>
+								Stay Tuned with Halal <span>We are launching soon.</span>
 							</h2>
 							<div class="launch-date">
 								<div class="opening-date">
@@ -66,14 +73,11 @@ require 'php/displayMSG.php';
 
 							<!-- Intro Youtube Video start -->
 							<div class="btn-intro">
-								<a  href="https://drive.google.com/file/d/10U-2ozdebvtAnYxDG3_cluxwv_qJ4bwL/preview"
-									class="popup-video">
+								<a href="https://drive.google.com/file/d/1C4HXjdXMBJ1BQTGmWfQSYQB3Oc14FzvQ/preview" class="popup-video">
 									<div class="icon-box"><i class="fa fa-play"></i></div>
 									Watch the little intro
 								</a>
 							</div>
-
-
 							<!-- Intro Youtube Video end -->
 						</div>
 					</div>
@@ -87,26 +91,36 @@ require 'php/displayMSG.php';
 							Subscribe now, We will let you know as son as we launch our new
 							website
 						</p>
-
-						<?php if ($message): ?>
-							<div class="alert alert-success"><?php echo $message; ?></div>
+						
+						<?php if (!empty($success)): ?>
+							<div class="alert alert-success" role="alert">
+								<?php echo $success ?>
+							</div>
 						<?php endif; ?>
 
-						<form action="php/contact-process.php" method="POST">
+						<?php if(!empty($errors)): ?>
+							<div class="alert alert-danger" role="alert">
+								<?php echo $errors ?>
+							</div>
+						<?php endif; ?>
+
+						<form action="php/form-handling.php" method="post">
+
+							<!-- @csrf -->
 							<div class="form-group">
-								<input type="text" name="name" class="form-control text-user" placeholder="ENTER YOUR NAME" required />
+								<input type="text" name="name" class="form-control text-user" placeholder="ENTER YOUR NAME" required/>
 							</div>
 
 							<div class="form-group">
-								<input type="email" name="email" class="form-control text-email" placeholder="ENTER YOUR EMAIL" required />
+								<input type="email" name="email" class="form-control text-email" placeholder="ENTER YOUR EMAIL"  required/>
 							</div>
 
 							<div class="form-group">
-								<textarea type="text" name="message" class="form-control text-chat" placeholder="TYPE YOUR MESSAGE HERE..." required></textarea>
+								<textarea name="message" class="form-control text-message" placeholder="LEAVE US A MESSAGE" ></textarea>
 							</div>
 
 							<div class="form-group">
-								<input type="submit" value="Subscribe Now" class="btn btn-primary btn-contact" />
+								<input type="submit" value="Subscribe Now" class="btn-contact" />
 							</div>
 						</form>
 					</div>
@@ -131,10 +145,10 @@ require 'php/displayMSG.php';
 	<script src="js/function.js"></script>
 	<!-- Countdown Script start -->
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function () {
 			var myDate = new Date("06/01/2025");
 			myDate.setDate(myDate.getDate());
-			$("#countdown").countdown(myDate, function(event) {
+			$("#countdown").countdown(myDate, function (event) {
 				$(this).html(
 					event.strftime(
 						'<div class="timer-wrapper"><div class="time">%D</div><span class="text">days</span></div><div class="timer-wrapper"><div class="time">%H</div><span class="text">hours</span></div><div class="timer-wrapper"><div class="time">%M</div><span class="text">min</span></div><div class="timer-wrapper"><div class="time">%S</div><span class="text">sec</span></div>'
@@ -144,14 +158,6 @@ require 'php/displayMSG.php';
 		});
 	</script>
 	<!-- Countdown Script start -->
-
-	<script>
-		$(document).ready(function() {
-			$('.popup-video').magnificPopup({
-			type: 'iframe'
-			});
-		});
-	</script>
 </body>
 
 </html>
